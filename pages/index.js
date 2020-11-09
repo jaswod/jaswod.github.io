@@ -2,15 +2,25 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { Heading, Link, Text, Code, Flex, Box } from "@chakra-ui/core";
 import { NewItem } from '../components/News'
+import useSWR from 'swr'
 
 export default function Home() {
-  var data = [
-        { title: "Documentation", link: "https://nextjs.org/docs",
-        body: "Find in-depth information about Next.js features and API."},
-        { title: "Test", link: "https://nextjs.org/",
-        body: "Blablabalbala balalbala bla"}
+  const { data, error } = useSWR('/api/news')
 
-  ]
+  const whenError = function() {
+    return <Text>failed to load</Text>
+  }
+  const untilLoad = function() {
+    return <Text>loading...</Text>
+  }
+  const load = function() {
+    return(
+      data.map((elem, index) => (
+        <NewItem key={index} title={elem.title} body={elem.body} link={elem.link} />
+      ))
+    )
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -28,11 +38,8 @@ export default function Home() {
         </Text>
 
         <Flex flexWrap="wrap" alignItems="center" justifyContent="center" maxW="800px" mt="10">
-          {
-            data.map((elem, index) => (
-                <NewItem key={index} title={elem.title} body={elem.body} link={elem.link} />
-            ))
-          }
+          { (error) && whenError() }
+          { (data) ? load() : untilLoad() }
         </Flex>
       </main>
 
