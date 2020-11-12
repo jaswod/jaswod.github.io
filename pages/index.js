@@ -5,7 +5,7 @@ import { NewItem } from '../components/News'
 import useSWR from 'swr'
 
 export default function Home() {
-  const { data, error } = useSWR('/api/news')
+  const { data, error } = useSWR('/api/newnews')
 
   const whenError = function() {
     return <Text>failed to load</Text>
@@ -16,7 +16,7 @@ export default function Home() {
   const load = function() {
     return(
       data.map((elem, index) => (
-        <NewItem key={index} title={elem.title} body={elem.body} link={elem.link} />
+        <NewItem key={index} title={elem.content.title} body={elem.content.body} link={elem.content.link} />
       ))
     )
   }
@@ -30,7 +30,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <Heading as="h1" fontSize="big" mb="2">
-          Welcome to <Link color="teal.500" href="https://nextjs.org">Next.js!</Link>!
+          My <Link color="teal.500" href="https://nextjs.org">blog</Link>!
         </Heading>
 
         <Text fontSize="xl" mt="2">
