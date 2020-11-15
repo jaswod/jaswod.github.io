@@ -1,40 +1,22 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'
 import { Heading, Input, FormControl, FormLabel, Flex, Box, Button, CircularProgress, Textarea } from "@chakra-ui/core";
 import axios from 'axios';
 // import { ErrorMessage } from "../../components/ErrorMessage"
 
-export default function NewUpdate() {
-    const router = useRouter()
-    const { uuid } = router.query
+export default function NewAdd() {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [link, setLink] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const getRegister = async (uuid) => {
-        if (title === '') {
-            let url = `/api/news/${uuid}`
-            await axios.get(url)
-            .then(function(response){
-                console.log(response)
-                setTitle(response.data.content.title)
-                setBody(response.data.content.body)
-                setLink(response.data.content.link)
-            })
-            .catch(function(error){
-                console.log(error)
-            })
-        }
-    }
     const handleSubmit = async event => {
         event.preventDefault();
         setIsLoading(true)
 
         setError(false)
 
-        let url = `/api/news/update/${uuid}`;
+        let url = `/api/posts/add`;
         await axios.post(url,{
             object: JSON.stringify({title: title, body: body, link: link})
         })
@@ -47,7 +29,6 @@ export default function NewUpdate() {
         })
         window.location = "/"
     };
-    getRegister(uuid)
 
     return (
         <Flex width="full" align="center" justifyContent="center">
@@ -106,7 +87,7 @@ export default function NewUpdate() {
                                 color="teal"
                                 />
                             ) : (
-                                'Update'
+                                'Add'
                             )}
                         </Button>
                     </form>

@@ -7,10 +7,10 @@ import useSWR, {mutate} from 'swr'
 import axios from 'axios';
 
 export default function Home() {
-  const { data, error } = useSWR('/api/news')
+  const { data, error } = useSWR('/api/posts')
 
   const deleteRegister = async (uuid) => {
-    let url = `/api/news/delete`;
+    let url = `/api/posts/delete`;
     await axios.post(url,{
         uuid: uuid
     })
@@ -20,7 +20,7 @@ export default function Home() {
     .catch(function (error){
         console.log(error)
     })
-    mutate('/api/news')
+    mutate('/api/posts')
   }
 
   const whenError = function() {
@@ -59,7 +59,7 @@ export default function Home() {
           { (data) ? load() : untilLoad() }
         </Flex>
         <Flex flexWrap="wrap" alignItems="center" justifyContent="center" maxW="800px" mt="10">
-          <Link color="teal.500" href="news/add">
+          <Link color="teal.500" href="posts/add">
             <Button>
               <AddIcon color="teal" size="xs" />
             </Button>

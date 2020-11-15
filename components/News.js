@@ -18,7 +18,7 @@ export const NewItem = (props) => {
             <Text fontSize="lg">{props.element.body}</Text>
           </Box>
           <Box flexBasis="5%">
-            <Link href={`/news/${props.element.uuid}`} >
+            <Link href={`/posts/${props.element.uuid}`} >
               <EditIcon color="teal" size="xs"/>
             </Link>
             <DeleteIcon color="teal" size="xs" onClick={() => { props.deleteFunction(props.element.uuid) }}/>

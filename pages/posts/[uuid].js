@@ -1,22 +1,40 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router'
 import { Heading, Input, FormControl, FormLabel, Flex, Box, Button, CircularProgress, Textarea } from "@chakra-ui/core";
 import axios from 'axios';
 // import { ErrorMessage } from "../../components/ErrorMessage"
 
-export default function NewAdd() {
+export default function NewUpdate() {
+    const router = useRouter()
+    const { uuid } = router.query
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [link, setLink] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    const getRegister = async (uuid) => {
+        if (title === '') {
+            let url = `/api/posts/${uuid}`
+            await axios.get(url)
+            .then(function(response){
+                console.log(response)
+                setTitle(response.data.content.title)
+                setBody(response.data.content.body)
+                setLink(response.data.content.link)
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+        }
+    }
     const handleSubmit = async event => {
         event.preventDefault();
         setIsLoading(true)
 
         setError(false)
 
-        let url = `/api/news/add`;
+        let url = `/api/posts/update/${uuid}`;
         await axios.post(url,{
             object: JSON.stringify({title: title, body: body, link: link})
         })
@@ -29,6 +47,7 @@ export default function NewAdd() {
         })
         window.location = "/"
     };
+    getRegister(uuid)
 
     return (
         <Flex width="full" align="center" justifyContent="center">
@@ -40,7 +59,7 @@ export default function NewAdd() {
             boxShadow="lg"
             >
                 <Box textAlign="center">
-                    <Heading as="h1">Add New</Heading>
+                    <Heading as="h1">Update Post</Heading>
                 </Box>
                 <Box my={4} textAlign="left">
                     <form onSubmit={handleSubmit}>
@@ -87,7 +106,7 @@ export default function NewAdd() {
                                 color="teal"
                                 />
                             ) : (
-                                'Add'
+                                'Update'
                             )}
                         </Button>
                     </form>
