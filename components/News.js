@@ -1,10 +1,27 @@
 import { Flex, Box, Button, useColorMode, Heading, Text } from "@chakra-ui/core";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import axios from 'axios';
 
 export const NewItem = (props) => {
     const { colorMode } = useColorMode()
     const bgColor = { light: 'white', dark: 'black' }
     const color = { light: 'black', dark: 'white' }
+
+    const deleteRegister = async (uuid) => {
+
+      console.log(uuid)
+      let url = `/api/news/delete`;
+      await axios.post(url,{
+          uuid: uuid
+      })
+      .then(function (response){
+          console.log(response);
+      })
+      .catch(function (error){
+          console.log(error)
+      })
+      window.location = "/"
+  };
 
     return (
           <>
@@ -19,7 +36,7 @@ export const NewItem = (props) => {
           </Box>
           <Box flexBasis="5%">
             <EditIcon color="teal" size="xs" onClick={() => { alert('Edit ' + + props.element.uuid) }}/>
-            <DeleteIcon color="teal" size="xs" onClick={() => { alert('Delete ' + props.element.uuid ) }}/>
+            <DeleteIcon color="teal" size="xs" onClick={() => { deleteRegister(props.element.uuid) }}/>
           </Box>
           </>
     )
