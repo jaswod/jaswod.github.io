@@ -3,12 +3,28 @@ import styles from '../styles/Home.module.css'
 import { Heading, Link, Text, Code, Flex, Box, Button } from "@chakra-ui/core";
 import { AddIcon } from "@chakra-ui/icons";
 import { NewItem } from '../components/News'
-import useSWR from 'swr'
+import useSWR, {mutate} from 'swr'
+import axios from 'axios';
 
 export default function Home() {
   const { data, error } = useSWR('/api/news')
 
+  const deleteRegister = async (uuid) => {
+    let url = `/api/news/delete`;
+    await axios.post(url,{
+        uuid: uuid
+    })
+    .then(function (response){
+        console.log(response);
+    })
+    .catch(function (error){
+        console.log(error)
+    })
+    mutate('/api/news')
+  }
+
   const whenError = function() {
+    console.log(error)
     return <Text>failed to load</Text>
   }
   const untilLoad = function() {
@@ -17,7 +33,7 @@ export default function Home() {
   const load = function() {
     return(
       data.map((elem, index) => (
-        <NewItem key={index} element={elem.content} />
+        <NewItem key={index} element={elem.content} deleteFunction={deleteRegister} />
       ))
     )
   }

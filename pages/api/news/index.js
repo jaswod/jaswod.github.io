@@ -8,7 +8,11 @@ export default async (req, res) => {
         path: process.env.GH_PATH } )
     
     var myList = await ghdbObj.getFromCategoryObjects('post')
-    await ghdbObj.sortByField(myList, "updateAt", "ASC")
+    if (!myList) {
+        myList = []
+    } else {
+        await ghdbObj.sortByField(myList, "updateAt", "ASC")
+    }
     res.statusCode = 200
     res.json(myList)
 }

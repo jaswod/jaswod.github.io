@@ -21,7 +21,6 @@ export default async (req, res) => {
         res.statusCode = 401
         res.json({error:"Some problem in uuid parameter."})
     }
-    console.log(objId)
     var ghdbObj = new Ghdb( { personalAccessToken: process.env.ACCESSTOKEN, 
         owner: process.env.GH_USER, 
         repo: process.env.GH_REPOSITORY, 
@@ -30,13 +29,5 @@ export default async (req, res) => {
     const retCall = await ghdbObj.remove(objId)
 
     res.statusCode=200
-    res.enc(retCall)
+    res.json(retCall)
   }
-  
-
-  /* 
-  For example:
-   $ curl -X POST http://localhost:3000/api/news/add -d "hola=adeu"
-   {"hola":"adeu"}
-  
-  */
