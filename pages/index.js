@@ -5,7 +5,7 @@ import { NewItem } from '../components/News'
 import useSWR from 'swr'
 
 export default function Home() {
-  const { data, error } = useSWR('/api/newnews')
+  const { data, error } = useSWR('/api/news')
 
   const whenError = function() {
     return <Text>failed to load</Text>
@@ -16,7 +16,7 @@ export default function Home() {
   const load = function() {
     return(
       data.map((elem, index) => (
-        <NewItem key={index} title={elem.content.title} body={elem.content.body} link={elem.content.link} />
+        <NewItem key={index} element={elem.content} />
       ))
     )
   }

@@ -1,4 +1,5 @@
-import { Box, useColorMode, Heading, Text } from "@chakra-ui/core";
+import { Flex, Box, Button, useColorMode, Heading, Text } from "@chakra-ui/core";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 export const NewItem = (props) => {
     const { colorMode } = useColorMode()
@@ -6,11 +7,21 @@ export const NewItem = (props) => {
     const color = { light: 'black', dark: 'white' }
 
     return (
-          <Box as="a" href={props.link} p="6" m="4" borderWidth="1px" rounded="lg" flexBasis="45%"
+          <>
+          <Box as="a" href={props.element.link} p="3" m="4" borderWidth="1px" rounded="lg" flexBasis="40%"
             bg={bgColor[colorMode]} color={color[colorMode]}>
-            <Heading as="h3" size="lg" mb="2">{props.title}</Heading>
-            <Text fontSize="lg">{props.body}</Text>
+              <Flex>
+                <Box>
+                <Heading as="h3" size="lg" mb="2">{props.element.title}</Heading>
+                </Box>
+              </Flex>
+            <Text fontSize="lg">{props.element.body}</Text>
           </Box>
+          <Box flexBasis="5%">
+            <EditIcon color="teal" size="xs" onClick={() => { alert('Edit ' + + props.element.uuid) }}/>
+            <DeleteIcon color="teal" size="xs" onClick={() => { alert('Delete ' + props.element.uuid ) }}/>
+          </Box>
+          </>
     )
 }
 NewItem.defaultProps = {

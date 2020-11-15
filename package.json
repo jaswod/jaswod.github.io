@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
+    "@chakra-ui/icons": "^1.0.0",
+    "@chakra-ui/system": "^1.0.0",
     "@emotion/core": "^10.1.1",
+    "@emotion/react": "^11.0.0",
     "@emotion/styled": "^10.0.27",
     "@octokit/rest": "^18.0.9",
     "dotenv": "^8.2.0",
