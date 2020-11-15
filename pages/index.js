@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { Heading, Link, Text, Code, Flex, Box } from "@chakra-ui/core";
+import { Heading, Link, Text, Code, Flex, Box, Button } from "@chakra-ui/core";
+import { AddIcon } from "@chakra-ui/icons";
 import { NewItem } from '../components/News'
 import useSWR from 'swr'
 
@@ -41,16 +42,22 @@ export default function Home() {
           { (error) && whenError() }
           { (data) ? load() : untilLoad() }
         </Flex>
+        <Flex flexWrap="wrap" alignItems="center" justifyContent="center" maxW="800px" mt="10">
+          <Link color="teal.500" href="news/add">
+            <Button>
+              <AddIcon color="teal" size="xs" />
+            </Button>
+          </Link>
+        </Flex>
       </main>
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://github.com/agustim"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          Powered by agustim
         </a>
       </footer>
     </div>
