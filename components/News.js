@@ -1,4 +1,4 @@
-import { Flex, Box, Button, useColorMode, Heading, Text } from "@chakra-ui/core";
+import { Flex, Box, Link, useColorMode, Heading, Text } from "@chakra-ui/core";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 export const NewItem = (props) => {
@@ -18,7 +18,9 @@ export const NewItem = (props) => {
             <Text fontSize="lg">{props.element.body}</Text>
           </Box>
           <Box flexBasis="5%">
-            <EditIcon color="teal" size="xs" onClick={() => { alert('Edit ' + + props.element.uuid) }}/>
+            <Link href={`/news/${props.element.uuid}`} >
+              <EditIcon color="teal" size="xs"/>
+            </Link>
             <DeleteIcon color="teal" size="xs" onClick={() => { props.deleteFunction(props.element.uuid) }}/>
           </Box>
           </>
