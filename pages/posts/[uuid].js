@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router'
-import { Heading, Input, FormControl, FormLabel, Flex, Box, Button, CircularProgress, Textarea } from "@chakra-ui/core";
+import { Heading, Input, FormControl, FormLabel, Flex, Box, Button, CircularProgress, Textarea, Link } from "@chakra-ui/core";
 import axios from 'axios';
 // import { ErrorMessage } from "../../components/ErrorMessage"
 
@@ -14,11 +14,11 @@ export default function NewUpdate() {
     const [isLoading, setIsLoading] = useState(false);
 
     const getRegister = async (uuid) => {
-        if (title === '') {
+        if (title === '' && uuid) {
             let url = `/api/posts/${uuid}`
+            console.log(url)
             await axios.get(url)
             .then(function(response){
-                console.log(response)
                 setTitle(response.data.content.title)
                 setBody(response.data.content.body)
                 setLink(response.data.content.link)
@@ -47,6 +47,7 @@ export default function NewUpdate() {
         })
         window.location = "/"
     };
+
     getRegister(uuid)
 
     return (
@@ -109,6 +110,15 @@ export default function NewUpdate() {
                                 'Update'
                             )}
                         </Button>
+                        <Link href="/">
+                            <Button
+                                variantColor="teal"
+                                variant="outline"
+                                width="full"
+                                mt={4} >
+                                    Cancel
+                            </Button>
+                        </Link>
                     </form>
                 </Box>
             </Box>
